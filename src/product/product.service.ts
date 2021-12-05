@@ -2,6 +2,8 @@ import { Injectable, Req } from '@nestjs/common';
 import { CategoryEntity } from 'src/entity/entities/category.entity';
 import { ProductEntity } from 'src/entity/entities/product.entity';
 import { EntityService } from 'src/entity/entity.service';
+import { Pagination } from 'src/paginate/pagination';
+import { PaginationOptionsInterface } from 'src/paginate/pagination.options.interface';
 import { CategoryDto } from './dto/category.dto';
 import { ProductDto } from './dto/product.dto';
 
@@ -18,8 +20,17 @@ export class ProductService {
 
     }
 
-    async getProduct() : Promise<ProductEntity[]> {
-        return await this.entityService.productRepo.find();
+    async getProduct(options: PaginationOptionsInterface) : Promise<Pagination<ProductEntity>>{
+
+        const [result, total] = await this.entityService.productRepo.findAndCount({
+            take:options.limit,
+            skip:(options.page-1) * (options.limit)
+        });
+        return new Pagination<ProductEntity>({
+           result,
+           total
+        
+        });
     }
 
     async addCategory(@Req() req, categoryDto: CategoryDto): Promise<CategoryEntity> {

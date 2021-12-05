@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
@@ -7,6 +7,7 @@ import { Roles } from 'src/auth/roles.decorator';
 import { CategoryEntity } from 'src/entity/entities/category.entity';
 import { Role } from 'src/entity/entities/enum/userRole.enum';
 import { ProductEntity } from 'src/entity/entities/product.entity';
+import { Pagination } from 'src/paginate/pagination';
 import { CategoryDto } from './dto/category.dto';
 import { ProductDto } from './dto/product.dto';
 import { Helper } from './Helper/customFileName';
@@ -44,9 +45,12 @@ export class ProductController {
       @Roles(Role.Admin)
       @UseGuards(JwtAuthGuard)
       @Get()
-      async getProduct(): Promise<ProductEntity[]> {
+      async getProduct(@Query() query): Promise<Pagination<ProductEntity>> {
+        //   const take = query.take || 5;
+        //   const page = query.page || 1;
+        //   const skip = (page-1) * take;
           try {
-              return await this.productService.getProduct();
+              return await this.productService.getProduct({limit: query.limit || 5, page: query.page || 1});
           } catch(err) {
               return err;
           }
