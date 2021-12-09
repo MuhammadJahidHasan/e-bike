@@ -46,9 +46,7 @@ export class ProductController {
       @UseGuards(JwtAuthGuard)
       @Get()
       async getProduct(@Query() query): Promise<Pagination<ProductEntity>> {
-        //   const take = query.take || 5;
-        //   const page = query.page || 1;
-        //   const skip = (page-1) * take;
+          
           try {
               return await this.productService.getProduct({limit: query.limit || 5, page: query.page || 1});
           } catch(err) {

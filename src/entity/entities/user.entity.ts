@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { CartEntity } from "./cart.entity";
 import { Role } from "./enum/userRole.enum";
 
 
@@ -38,5 +39,8 @@ export class UserEntity {
         default: Role.User
     })
     roles: Role[];
+
+    @OneToMany(() => CartEntity, cart => cart.user)
+    user: CartEntity[];
 
 }

@@ -20,16 +20,23 @@ export class ProductService {
 
     }
 
-    async getProduct(options: PaginationOptionsInterface) : Promise<Pagination<ProductEntity>>{
+    async getProduct(options: PaginationOptionsInterface) : Promise<Pagination<ProductEntity>> {
 
+         if(options.limit > 7) {
+            options.limit = 7;
+         }
+         let limit  = options.limit;
+         let page = options.page * 1;
+         console.log(typeof limit, typeof page);
         const [result, total] = await this.entityService.productRepo.findAndCount({
-            take:options.limit,
-            skip:(options.page-1) * (options.limit)
+            take:limit,
+            skip:(page-1) * limit
         });
         return new Pagination<ProductEntity>({
            result,
-           total
-        
+           total,
+           limit,
+           page
         });
     }
 
@@ -42,8 +49,5 @@ export class ProductService {
     async getCategory() : Promise<CategoryEntity[]> {
         return await this.entityService.categoryRepo.find();
     }
-
-
-
 
 }

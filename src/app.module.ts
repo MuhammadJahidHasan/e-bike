@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { EntityModule } from './entity/entity.module';
 import { ProductModule } from './product/product.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { ProductModule } from './product/product.module';
 	}),	
     EntityModule,
 	AuthModule,
-	ProductModule
+	ProductModule,
+	CartModule
   ],
   controllers: [AppController],
   providers: [AppService],
