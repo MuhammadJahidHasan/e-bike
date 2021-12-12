@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -14,7 +13,7 @@ import { CartModule } from './cart/cart.module';
     TypeOrmModule.forRootAsync({
 			useFactory: async () => ({
 				type: 'mysql',
-				host: 'localhost',
+				host: '172.17.0.1',
 				port: 3306,
 				username:'root',
 				password: 'root',
