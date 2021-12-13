@@ -1,10 +1,11 @@
 import { Injectable, Req } from '@nestjs/common';
+import { query } from 'express';
 import { CategoryEntity } from 'src/entity/entities/category.entity';
 import { ProductEntity } from 'src/entity/entities/product.entity';
 import { EntityService } from 'src/entity/entity.service';
 import { Pagination } from 'src/paginate/pagination';
-import { PaginationOptionsInterface } from 'src/paginate/pagination.options.interface';
 import { CategoryDto } from './dto/category.dto';
+import { GetProductDto } from './dto/getProduct.dto';
 import { ProductDto } from './dto/product.dto';
 
 @Injectable()
@@ -20,14 +21,10 @@ export class ProductService {
 
     }
 
-    async getProduct(options: PaginationOptionsInterface) : Promise<Pagination<ProductEntity>> {
+    async getProduct(@Req() query: GetProductDto) : Promise<Pagination<ProductEntity>> {
 
-         if(options.limit > 7) {
-            options.limit = 7;
-         }
-         let limit  = options.limit;
-         let page = options.page * 1;
-         console.log(typeof limit, typeof page);
+         let limit  = query.limit;
+         let page = query.page;
         const [result, total] = await this.entityService.productRepo.findAndCount({
             take:limit,
             skip:(page-1) * limit

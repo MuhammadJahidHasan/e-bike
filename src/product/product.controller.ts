@@ -9,6 +9,7 @@ import { Role } from 'src/entity/entities/enum/userRole.enum';
 import { ProductEntity } from 'src/entity/entities/product.entity';
 import { Pagination } from 'src/paginate/pagination';
 import { CategoryDto } from './dto/category.dto';
+import { GetProductDto } from './dto/getProduct.dto';
 import { ProductDto } from './dto/product.dto';
 import { Helper } from './Helper/customFileName';
 import { ProductService } from './product.service';
@@ -45,10 +46,10 @@ export class ProductController {
       @Roles(Role.Admin)
       @UseGuards(JwtAuthGuard)
       @Get()
-      async getProduct(@Query() query): Promise<Pagination<ProductEntity>> {
+      async getProduct(@Query() query: GetProductDto): Promise<Pagination<ProductEntity>> {
           
           try {
-              return await this.productService.getProduct({limit: query.limit || 5, page: query.page || 1});
+              return await this.productService.getProduct(query);
           } catch(err) {
               return err;
           }
