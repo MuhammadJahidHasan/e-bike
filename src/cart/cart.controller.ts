@@ -1,6 +1,7 @@
-import { Body, Controller, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { CartEntity } from 'src/entity/entities/cart.entity';
+import { ProductEntity } from 'src/entity/entities/product.entity';
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/createCart.dto';
 
@@ -23,7 +24,19 @@ export class CartController {
         
     }
 
+    @UseGuards(JwtAuthGuard)
+    @HttpCode(200)
+    @Get()
+    async getCart(@Req() req): Promise<ProductEntity[]> {
 
-    getCart() {}
+         console.log("akjg");
+        try{
+              return await this.cartService.getCart(req);
+        } catch(err) {
+            return err;
+        }
+
+
+    }
 
 }

@@ -12,19 +12,8 @@ export class CartEntity {
         type: Number,
         nullable: false
     })
-    price: number;
-
-    @Column({
-        type: Number,
-        nullable: false
-    })
     quantity: number;
 
-    @Column({
-        type: Number,
-        nullable: false
-    })
-    totalPrice: number;
 
     @ManyToOne(() => UserEntity)
     @JoinColumn()
