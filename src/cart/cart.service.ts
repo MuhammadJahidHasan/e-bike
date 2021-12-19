@@ -55,20 +55,27 @@ export class CartService {
     }
 
 
-    async getCart(@Req() req): Promise<ProductEntity[]> {
+    async getCart(@Req() req): Promise<CartEntity[]> {
     
       const userId = req.user.userId;
       if(userId) {
-          const product =  await this.entityService.productRepo
-          .createQueryBuilder('product')
-          .select('product.title, product.description, product.price, product.brand')
-          .innerJoin('product.cart', 'cart')
-          .addSelect('SUM(product.price*cart.quantity) as total_price')
-          .where('cart.userId = :userId', {userId: userId})
-          .groupBy('cart.productId')
-          .getRawMany()
+          const product =  await this.entityService.cartRepo.find({
+              select:['quantity'],
+              relations:['product'],
+              where: {
+                 user:userId
+                }
+          })   
+        //   .createQueryBuilder('product')
+        //   .select('product.title, product.description, product.price, product.brand')
+        //   .innerJoin('product.cart', 'cart')
+        //   .addSelect('SUM(product.price*cart.quantity) as total_price')
+        //   .where('cart.userId = :userId', {userId: userId})
+        //   .groupBy('cart.productId')
+        //   .getRawMany()
           //console.log(product);
            return  product;
+           
       }
 
     }

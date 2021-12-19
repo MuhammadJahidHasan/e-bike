@@ -27,7 +27,7 @@ export class CartController {
     @UseGuards(JwtAuthGuard)
     @HttpCode(200)
     @Get()
-    async getCart(@Req() req): Promise<ProductEntity[]> {
+    async getCart(@Req() req): Promise<CartEntity[]> {
 
          console.log("akjg");
         try{

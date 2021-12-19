@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CartEntity } from './entities/cart.entity';
 import { CategoryEntity } from './entities/category.entity';
+import { OrderEntity } from './entities/order.entity';
+import { OrderItemEntity } from './entities/orderItem.entity';
 import { ProductEntity } from './entities/product.entity';
 import {UserEntity} from './entities/user.entity';
 
@@ -17,6 +19,10 @@ export class EntityService {
         @InjectRepository(CategoryEntity)
         public readonly categoryRepo: Repository<CategoryEntity>,
         @InjectRepository(CartEntity)
-        public readonly cartRepo: Repository<CartEntity>
+        public readonly cartRepo: Repository<CartEntity>,
+        @InjectRepository(OrderEntity)
+        public readonly orderRepo: Repository<OrderEntity>,
+        @InjectRepository(OrderItemEntity)
+        public readonly orderItemRepo: Repository<OrderItemEntity>
     ) {}
 }
