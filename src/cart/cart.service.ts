@@ -24,7 +24,7 @@ export class CartService {
             //  .createQueryBuilder('cart')
             //  .where('cart.productId = :productId',{productId: createCartDto.productId})
             //  .getOne();
-            console.log(pro);
+            //console.log(pro);
              if(pro) {
                    console.log('Already added');
              } else {

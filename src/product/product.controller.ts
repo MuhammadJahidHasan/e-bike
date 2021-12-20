@@ -42,7 +42,7 @@ export class ProductController {
       }
 
       @HttpCode(200)
-      @UseGuards(RolesGuard)
+     @UseGuards(RolesGuard)
       @Roles(Role.Admin)
       @UseGuards(JwtAuthGuard)
       @Get()

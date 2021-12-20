@@ -7,7 +7,6 @@ export class GetProductDto {
    
     @IsOptional()
     @Min(1)
-    @Max(10)
     @IsInt()
     @Type(() => Number)
     limit: number = 10;
