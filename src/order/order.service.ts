@@ -12,6 +12,9 @@ export class OrderService {
           let subtotals = 0;
           let orderItemList = [];
           let orderItem = {};
+          const timeElapsed = Date.now();
+          const today = new Date(timeElapsed);
+          
           const cart =  await this.entityService.cartRepo.find({
             select:['quantity'], 
             relations:['product'],
@@ -19,10 +22,9 @@ export class OrderService {
                user:userId
               }
         }) 
-        //console.log(cart.length > 0);
+
         if(cart.length > 0) {
          cart.forEach(async (cartItems, index) => {
-                //console.log(cartItems.product.title);  
                  orderItem = {
                     title: cartItems.product.title,
                     price: cartItems.product.price,
@@ -33,8 +35,7 @@ export class OrderService {
                orderItemList.push(orderItem);
             });
 
-           const timeElapsed = Date.now();
-            const today = new Date(timeElapsed);
+           
            const newOrder = {
                userMail: req.user.email,
                date: today.toDateString(),

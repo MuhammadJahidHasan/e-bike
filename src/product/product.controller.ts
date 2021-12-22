@@ -1,5 +1,6 @@
 import { Body, Controller, Get, HttpCode, Post, Query, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
@@ -14,6 +15,7 @@ import { ProductDto } from './dto/product.dto';
 import { Helper } from './Helper/customFileName';
 import { ProductService } from './product.service';
 
+@ApiTags('Product')
 @Controller('product')
 export class ProductController {
 
@@ -42,7 +44,8 @@ export class ProductController {
       }
 
       @HttpCode(200)
-     @UseGuards(RolesGuard)
+      @ApiBearerAuth()
+      @UseGuards(RolesGuard)
       @Roles(Role.Admin)
       @UseGuards(JwtAuthGuard)
       @Get()

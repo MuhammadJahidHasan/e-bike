@@ -1,10 +1,12 @@
 import { Body, Controller, Get, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { CartEntity } from 'src/entity/entities/cart.entity';
 import { ProductEntity } from 'src/entity/entities/product.entity';
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/createCart.dto';
 
+@ApiTags('Cart')
 @Controller('cart')
 export class CartController {
 
