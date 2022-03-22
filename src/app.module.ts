@@ -20,7 +20,7 @@ import { OrderModule } from './order/order.module';
 				password: 'root',
 				database: 'e_bike',
 				entities: ['dist/**/*.entity{.ts,.js}'],
-				synchronize: true,
+				synchronize: false,
 				extra: {
 					connectionLimit: 10
 				}
